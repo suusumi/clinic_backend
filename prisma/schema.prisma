@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contacts {
+  id         Int     @id @default(autoincrement())
+  first_tel  String?
+  second_tel String?
+  mail       String?
+  street     String?
+  city       String  @default("Волгоград")
+  vk_link    String?
+  tg_link    String?
+  wa_link    String?
+  email_link String?
+}
+
+model Infographics {
+  id          Int    @id @default(autoincrement())
+  value       String
+  description String
+}
+
+model Documents {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String? @default("doc")
+  file_name   String?
+}
+
+model Banners {
+  id           Int     @id @default(autoincrement())
+  title        String
+  subtitle     String
+  text_content String  @db.Text
+  banner_type  String?
+  img_path     String?
+}
+
+model Administrators {
+  id            Int     @id @default(autoincrement())
+  login         String  @unique
+  password_hash String
+  full_name     String? @db.VarChar(255)
+}
+
+model Services {
+  id              Int           @id @default(autoincrement())
+  name            String
+  description     String?
+  price           Int
+  sub_category_id Int // Поле для связи с подкатегориями
+  sub_category    SubCategories @relation(fields: [sub_category_id], references: [id], onDelete: Cascade) // Связь (sub_cat_id назначется FK, id в SubCategories тоже становится FK)
+}
+
+model Categories {
+  id            Int             @id @default(autoincrement())
+  name          String          @default("Аллергология и иммунология")
+  subcategories SubCategories[] // Связь многие к одному
+}
+
+model SubCategories {
+  id          Int        @id @default(autoincrement())
+  category_id Int // Поле для связи с категориями
+  category    Categories @relation(fields: [category_id], references: [id], onDelete: Cascade) // Связь
+  name        String     @default("Прием")
+  services    Services[] // Связь многие к одному
+}
+
+model Specialists {
+  id         Int         @id @default(autoincrement())
+  photo_path String?
+  name       String
+  post       String?
+  speciality String?
+  degree     String?
+  filial     SpecFilial? @default(PlPavBortsov1)
+}
+
+enum SpecFilial {
+  KIM20
+  PlPavBortsov1
+  Kozlovskaya45A
+  KIM18A
+}
