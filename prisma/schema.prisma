@@ -91,3 +91,10 @@ enum SpecFilial {
   Kozlovskaya45A
   KIM18A
 }
+
+// Таблица "О нас"
+model AboutUs {
+  id        Int    @id @default(1) @map("_id")
+  content   String
+  imageUrl  String
+}

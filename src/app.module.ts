@@ -12,9 +12,10 @@ import { ContactsModule } from './contacts/contacts.module';
 import { ServicesModule } from './services/services.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
+import {AboutUsModule} from "./about-us/about-us.module";
 
 @Module({
-  imports: [DatabaseModule, SpecialistsModule, BannersModule, InphographicsModule, AdminModule, DocumentsModule, ContactsModule, ServicesModule, CategoriesModule, SubcategoriesModule],
+  imports: [DatabaseModule, SpecialistsModule, BannersModule, AboutUsModule, InphographicsModule, AdminModule, DocumentsModule, ContactsModule, ServicesModule, CategoriesModule, SubcategoriesModule],
   controllers: [AppController, ImagesControllerController],
   providers: [AppService],
 })
